@@ -1,0 +1,40 @@
+name: API Tests - ServeRest Usuarios
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: 'Tags de Karate (ej. @smoke)'
+        required: false
+        default: ''
+
+jobs:
+  karate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Ejecutar pruebas
+        run: |
+          if [ -n "${{ github.event.inputs.tags }}" ]; then
+            mvn -B test -Dkarate.options="--tags ${{ github.event.inputs.tags }}"
+          else
+            mvn -B test
+          fi
+
+      - name: Publicar reporte Karate
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: karate-reports
+          path: target/karate-reports/

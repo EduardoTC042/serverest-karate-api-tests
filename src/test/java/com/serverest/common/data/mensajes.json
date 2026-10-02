@@ -1,0 +1,12 @@
+{
+  "registroCreado": "Cadastro realizado com sucesso",
+  "registroActualizado": "Registro alterado com sucesso",
+  "registroEliminado": "Registro excluído com sucesso",
+  "ningunRegistroEliminado": "Nenhum registro excluído",
+  "emailEnUso": "Este email já está sendo usado",
+  "usuarioNoEncontrado": "Usuário não encontrado",
+  "idInvalido": "id deve ter exatamente 16 caracteres alfanuméricos",
+  "usuarioConCarrito": "Não é permitido excluir usuário com carrinho cadastrado",
+  "loginExitoso": "Login realizado com sucesso",
+  "administradorInvalido": "administrador deve ser 'true' ou 'false'"
+}

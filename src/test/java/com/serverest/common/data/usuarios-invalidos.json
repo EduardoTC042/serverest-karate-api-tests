@@ -1,0 +1,13 @@
+[
+  { "caso": "sin nome",                     "omitir": "nome",          "valores": {},                            "respuestaEsperada": { "nome": "nome é obrigatório" } },
+  { "caso": "sin email",                    "omitir": "email",         "valores": {},                            "respuestaEsperada": { "email": "email é obrigatório" } },
+  { "caso": "sin password",                 "omitir": "password",      "valores": {},                            "respuestaEsperada": { "password": "password é obrigatório" } },
+  { "caso": "sin administrador",            "omitir": "administrador", "valores": {},                            "respuestaEsperada": { "administrador": "administrador é obrigatório" } },
+  { "caso": "nome vacío",                   "omitir": null,            "valores": { "nome": "" },                "respuestaEsperada": { "nome": "nome não pode ficar em branco" } },
+  { "caso": "email vacío",                  "omitir": null,            "valores": { "email": "" },               "respuestaEsperada": { "email": "email não pode ficar em branco" } },
+  { "caso": "password vacío",               "omitir": null,            "valores": { "password": "" },            "respuestaEsperada": { "password": "password não pode ficar em branco" } },
+  { "caso": "email con formato inválido",   "omitir": null,            "valores": { "email": "correo-invalido" },"respuestaEsperada": { "email": "email deve ser um email válido" } },
+  { "caso": "administrador no permitido",   "omitir": null,            "valores": { "administrador": "yes" },    "respuestaEsperada": { "administrador": "administrador deve ser 'true' ou 'false'" } },
+  { "caso": "administrador booleano",       "omitir": null,            "valores": { "administrador": true },     "respuestaEsperada": { "administrador": "administrador deve ser 'true' ou 'false'" } },
+  { "caso": "campo no permitido en body",   "omitir": null,            "valores": { "telefono": "999999999" },   "respuestaEsperada": { "telefono": "telefono não é permitido" } }
+]
