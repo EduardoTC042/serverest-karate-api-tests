@@ -39,13 +39,13 @@ Comportamientos relevantes descubiertos y cubiertos por pruebas:
 | Independencia | Cada escenario crea sus propios datos; ninguno depende de usuarios preexistentes ni del orden de ejecución. |
 | Unicidad | `generarUsuario()` combina **DataFaker** (nombres y passwords realistas, locale `es`) con un **UUID** en el email → sin colisiones en paralelo ni con otros usuarios de la instancia pública. |
 | Sobrescritura declarativa | `generarUsuario({ administrador: 'false' })` cambia solo lo necesario para el caso. |
-| Limpieza garantizada | Los ids creados se registran en `idsParaLimpiar` y el hook `afterScenario` (`limpiar-usuarios.js`) los elimina **aunque el escenario falle**. En los negativos, si la API aceptara un payload por error, el usuario creado también se registra para limpieza. |
+| Limpieza garantizada | Los recursos creados se registran inmediatamente en listas específicas. El hook `afterScenario` (`limpiar-usuarios.js`) cancela carritos, elimina productos y finalmente usuarios, incluso si el escenario falla. Los errores se acumulan mientras se intenta limpiar el resto y se reportan como fallo del escenario. En los negativos, si la API aceptara un payload por error, el usuario creado también se registra para limpieza. |
 | Configuración por entorno | `karate-config.js` resuelve `baseUrl` por `karate.env` (`dev` pública / `local`) o `-DbaseUrl`. |
 
 ## 5. Patrones utilizados
 
 - **Arrange–Act–Assert** visible en cada escenario (comentarios marcan las fases en los más largos).
-- **Reusable features / Helpers (`@ignore`)**: `crear-usuario`, `eliminar-usuario`, `login` encapsulan precondiciones y se invocan con `call read(helpers.x)`, devolviendo datos (id, payload, token) al escenario llamador. Equivalen a un *Service Object* sobre la API.
+- **Reusable features / Helpers (`@ignore`)**: `crear-usuario`, `eliminar-usuario`, `login`, `cancelar-carrito` y `eliminar-producto` encapsulan operaciones reutilizables y se invocan con `call read(helpers.x)`. Los helpers de limpieza mantienen aislada la lógica de teardown de los escenarios.
 - **Test Data Builder**: `generarUsuario(overrides)` construye un payload válido por defecto que cada escenario ajusta.
 - **Configuración centralizada**: `karate-config.js` expone `baseUrl`, esquemas, mensajes, utilidades y rutas a helpers a todos los features.
 - **Data-Driven Testing** con `Scenario Outline` (tablas inline y Examples dinámicos desde JSON).

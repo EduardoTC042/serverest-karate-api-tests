@@ -4,7 +4,7 @@ Feature: POST /usuarios - Registro de usuarios
   Como consumidor de la API de ServeRest
   Quiero registrar usuarios
   Para que puedan autenticarse y operar en la tienda
-
+  
   Background:
     * url baseUrl
     * def idsParaLimpiar = []

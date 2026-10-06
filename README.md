@@ -83,7 +83,7 @@ Después de la ejecución:
 │       │   ├── eliminar-usuario.feature
 │       │   └── flujo-crud-usuario.feature
 │       └── common/
-│           ├── helpers/                    # Features reutilizables (@ignore): crear, eliminar, login
+│           ├── helpers/                    # Features reutilizables (@ignore): CRUD y limpieza de recursos
 │           ├── schemas/                    # Esquemas JSON (fuzzy matching de Karate)
 │           ├── data/                       # Mensajes esperados y datos inválidos (data-driven)
 │           └── utils/                      # Generador de datos (DataFaker), id aleatorio, limpieza
@@ -94,7 +94,7 @@ Después de la ejecución:
 ## Datos de prueba
 
 - Cada escenario **crea sus propios usuarios** con datos únicos (`generarUsuario()`: DataFaker + UUID), por lo que la suite es independiente del estado de la base y puede ejecutarse en paralelo.
-- Al terminar cada escenario (incluso si falla) un hook `afterScenario` **elimina los usuarios creados**, dejando limpia la instancia pública.
+- Al terminar cada escenario (incluso si falla) un hook `afterScenario` limpia los recursos creados en orden: cancela carritos, elimina productos y, finalmente, usuarios. Si algún paso de limpieza falla, el escenario queda marcado como fallido con el detalle del recurso afectado.
 
 ## Subir el proyecto a GitHub
 

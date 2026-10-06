@@ -4,6 +4,8 @@ Feature: DELETE /usuarios/{_id} - Eliminación de usuario
   Background:
     * url baseUrl
     * def idsParaLimpiar = []
+    * def carritosParaLimpiar = []
+    * def productosParaLimpiar = []
     * configure afterScenario = limpiarUsuarios
 
   @smoke @positivo
@@ -54,6 +56,7 @@ Feature: DELETE /usuarios/{_id} - Eliminación de usuario
     And header Authorization = auth.token
     And request producto
     When method post
+    * if (responseStatus == 201) karate.appendTo('productosParaLimpiar', { id: response._id, token: auth.token })
     Then status 201
     * def idProducto = response._id
 
@@ -61,6 +64,7 @@ Feature: DELETE /usuarios/{_id} - Eliminación de usuario
     And header Authorization = auth.token
     And request { produtos: [ { idProduto: '#(idProducto)', quantidade: 1 } ] }
     When method post
+    * if (responseStatus == 201) karate.appendTo('carritosParaLimpiar', { id: response._id, token: auth.token })
     Then status 201
     * def idCarrito = response._id
 
@@ -71,14 +75,3 @@ Feature: DELETE /usuarios/{_id} - Eliminación de usuario
     # Assert
     Then status 400
     And match response == { message: '#(msg.usuarioConCarrito)', idCarrinho: '#(idCarrito)' }
-
-    # Limpieza: cancelar la compra (repone stock) y eliminar el producto
-    Given path 'carrinhos', 'cancelar-compra'
-    And header Authorization = auth.token
-    When method delete
-    Then status 200
-
-    Given path 'produtos', idProducto
-    And header Authorization = auth.token
-    When method delete
-    Then status 200

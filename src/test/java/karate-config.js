@@ -33,6 +33,8 @@ function fn() {
     helpers: {
       crearUsuario: base + 'helpers/crear-usuario.feature',
       eliminarUsuario: base + 'helpers/eliminar-usuario.feature',
+      cancelarCarrito: base + 'helpers/cancelar-carrito.feature',
+      eliminarProducto: base + 'helpers/eliminar-producto.feature',
       login: base + 'helpers/login.feature'
     }
   };
